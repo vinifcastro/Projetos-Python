@@ -1,61 +1,86 @@
 import os
 import time
 import random
-import sys
+
+
+def limpar_tela():
+    """Limpa a tela do console conforme o OS da pessoa."""
+    if os.name == 'nt':
+        os.system('cls')
+    else:
+        os.system('clear')
+
+
+def obter_dificuldade():
+    """
+    Função para obter a dificuldade escolhida pelo jogador.
+    Retorna a quantidade de tentativas referente a dificuldade selecionada.
+    """
+    tentativas = ["", "15", "10", "5"]  # Cria a lista de tentativas por dificuldade(index)
+    limpar_tela()
+    print("Escolha a dificuldade:")
+    print("1 - Fácil")
+    print("2 - Intermediário")
+    print("3 - Difícil")
+    while True:
+        escolha = input("Digite o número da dificuldade desejada (1, 2 ou 3): ")
+        if escolha in ["1", "2", "3"]:
+            return int(tentativas[int(escolha)])
+        else:
+            limpar_tela()
+            print("Opção inválida. Escolha uma dificuldade válida.")
+
+
 def jogar():
     print("================================")
     print("Bem vindo ao jogo de advinhação!")
     print("================================")
 
-    pontuacao = 1000
-    rodada = 0
-    ganhou = False
-    numero_secreto = random.randrange(1, 101)
+    pontuacao = 1000  # Define pontuação inicial
+    ganhou = False  # Variável que definirá a vitória ou não do jogo
+    numero_secreto = random.randrange(1, 101)  # Número secreto randomizado de 1 a 100
 
-    dificuldade = int(input("Qual a dificuldade desejada?\n1 - Fácil\n2 - Intermediário\n3 - Difícil\nDigite a dificuldade (1,2 ou 3): "))
+    total_de_tentativas = obter_dificuldade()
 
-    if dificuldade == 1:
-        total_de_tentativas = 15
-    elif dificuldade == 2:
-        total_de_tentativas = 10
-    elif dificuldade == 3:
-        total_de_tentativas = 5
-    else:
-        print("\n\nDificuldade selecionada inválida!\n")
-        sys.exit()
-
-    for rodada in range(1, total_de_tentativas+1):
-        os.system('CLS') or None
+    for rodada in range(1, total_de_tentativas + 1):  # For que define a quantidade de tentativas
+        limpar_tela()
         chute = -1
-        print(f"Tentativa número {rodada} de {total_de_tentativas}.", end="\n\n")
+        print(f"Tentativa número {rodada} de {total_de_tentativas}.\n")
 
-        while int(chute) <= 0 or int(chute) > 100:
-            chute = input("Digite o seu número entre 1 e 100: ")
+        while not 1 <= chute <= 100:  # Faz com que o usuário digite várias vezes, até a entrada esteja correta
+            try:
+                chute = int(input("Digite o seu número entre 1 e 100: "))
+            except ValueError:  # (try-except) Gera uma exceção caso o número não possa ser convertido para inteiro.
+                mensagem = "Valor inválido. " \
+                           "Digite um número válido.\n"
+                print(mensagem)
 
-        print("Voce Digitou: ", chute, end="\n\n")
+        print("Você Digitou:", chute, end="\n\n")
 
-        if numero_secreto == int(chute):
-            print("Você acertou!", end="\n\n")
+        if numero_secreto == chute:  # Compara o chute do usuário com o número randomizado.
+            print("Você acertou!\n")
             ganhou = True
             time.sleep(3)
             break
-        else:
-            if int(chute) > numero_secreto:
-                print("Você errou! O seu chute foi maior que o número secreto!", end="\n\n")
-            elif int(chute) < numero_secreto:
-                print("Você errou! O seu chute foi menor que o número secreto!", end="\n\n")
-        pontuacao -= abs(numero_secreto - int(chute))
-        time.sleep(3)
+        else:  # Caso o usuário erre o chute, receberá um feedback se o erro foi pra mais ou menos.
+            if chute > numero_secreto:
+                print("Você errou! O seu chute foi maior que o número secreto!\n")
+            elif chute < numero_secreto:
+                print("Você errou! O seu chute foi menor que o número secreto!\n")
+            pontuacao -= abs(numero_secreto - chute)
+            time.sleep(3)
 
-    os.system('CLS') or None
-    if ganhou:
+    limpar_tela()
+
+    if ganhou:  # Mensagem de vitória
         print(f"Sua pontuação foi de: {pontuacao}")
-        print("Parabéns, você ganhou!", end="\n\n")
-    else:
-        print("Que pena, você perdeu!", end="\n\n")
+        print("Parabéns, você ganhou!\n")
+    else:  # Mensagem de derrota
+        print("Que pena, você perdeu!\n")
 
-    print(f"O número secreto era: {numero_secreto}", end="\n\n")
-    print("Fim do jogo!", end="\n")
+    print(f"O número secreto era: {numero_secreto}\n")
+    print("Fim do jogo!\n")  # Mensagem de encerramento do jogo.
 
-if __name__ == "__main__":
+
+if __name__ == "__main__":  # Faz com que o arquivo possa ser executado sem a necessidade de outro.
     jogar()

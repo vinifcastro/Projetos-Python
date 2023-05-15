@@ -3,24 +3,45 @@ import time
 import forca
 import jogo_de_advinhacao
 
-print("================================")
-print("====== Escolha o seu Jogo ======")
-print("================================")
 
-print("\n\nDigite 1 para selecionar o jogo Forca.\nDigite 2 para selecionar o jogo Advinhação\n")
+def limpar_console():
+    # Limpa a tela do console
+    os.system('cls' if os.name == 'nt' else 'clear')
 
-jogo = int(input("Digite o número correspondente ao jogo: "))
 
-if jogo == 1:
-    print("\nJogando Forca!")
+def exibir_menu():
+    # Exibe o menu de seleção de jogos
+    print("===============================")
+    print("====== Escolha o seu Jogo =====")
+    print("===============================")
+    print("\nDigite 1 para selecionar o jogo Forca.")
+    print("Digite 2 para selecionar o jogo Advinhação.\n")
+
+
+def jogar_jogo(jogo):
+    # Inicia o jogo selecionado
+    print(f"\nJogando {jogo}!")
     time.sleep(1)
-    os.system('CLS') or None
-    forca.jogar()
+    limpar_console()
 
-elif jogo == 2:
-    print("\nJogando Advinhação!")
-    time.sleep(1)
-    os.system('CLS') or None
-    jogo_de_advinhacao.jogar()
-else:
-    print("\nJogo selecionado inválido!")
+    if jogo == 'forca':
+        forca.jogar()
+    elif jogo == 'advinhacao':
+        jogo_de_advinhacao.jogar()
+
+
+def main():
+    limpar_console()
+    exibir_menu()
+    jogo = int(input("Digite o número correspondente ao jogo: "))  # O Usuário digita o jogo que deseja iniciar
+
+    if jogo == 1:   # Seleciona o jogo escolhido ou filtra a entrada caso ela seja invalida
+        jogar_jogo('forca')
+    elif jogo == 2:
+        jogar_jogo('advinhacao')
+    else:
+        print("\nJogo selecionado inválido!")
+
+
+if __name__ == "__main__":  # Faz com que o arquivo possa ser executado sem a necessidade de outro.
+    main()
