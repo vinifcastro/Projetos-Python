@@ -23,7 +23,6 @@ def jogar_jogo(jogo):
     print(f"\nJogando {jogo}!")
     time.sleep(1)
     limpar_console()
-
     if jogo == 'forca':
         forca.jogar()
     elif jogo == 'advinhacao':
