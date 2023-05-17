@@ -3,39 +3,7 @@ import time
 import random
 
 
-def limpar_tela():
-    """Limpa a tela do console conforme o OS da pessoa."""
-    if os.name == 'nt':
-        os.system('cls')
-    else:
-        os.system('clear')
-
-
-def obter_dificuldade():
-    """
-    Função para obter a dificuldade escolhida pelo jogador.
-    Retorna a quantidade de tentativas referente a dificuldade selecionada.
-    """
-    tentativas = ["", "15", "10", "5"]  # Cria a lista de tentativas por dificuldade(index)
-    limpar_tela()
-    print("Escolha a dificuldade:")
-    print("1 - Fácil")
-    print("2 - Intermediário")
-    print("3 - Difícil")
-    while True:
-        escolha = input("Digite o número da dificuldade desejada (1, 2 ou 3): ")
-        if escolha in ["1", "2", "3"]:
-            return int(tentativas[int(escolha)])
-        else:
-            limpar_tela()
-            print("Opção inválida. Escolha uma dificuldade válida.")
-
-
-def jogar():
-    print("================================")
-    print("Bem vindo ao jogo de advinhação!")
-    print("================================")
-
+def jogo_implementacao():
     pontuacao = 1000  # Define pontuação inicial
     ganhou = False  # Variável que definirá a vitória ou não do jogo
     numero_secreto = random.randrange(1, 101)  # Número secreto randomizado de 1 a 100
@@ -80,6 +48,45 @@ def jogar():
 
     print(f"O número secreto era: {numero_secreto}\n")
     print("Fim do jogo!\n")  # Mensagem de encerramento do jogo.
+
+
+def apresentacao():
+    print("================================")
+    print("Bem vindo ao jogo de advinhação!")
+    print("================================")
+
+
+def limpar_tela():
+    """Limpa a tela do console conforme o OS da pessoa."""
+    if os.name == 'nt':
+        os.system('cls')
+    else:
+        os.system('clear')
+
+
+def obter_dificuldade():
+    """
+    Função para obter a dificuldade escolhida pelo jogador.
+    Retorna a quantidade de tentativas referente a dificuldade selecionada.
+    """
+    tentativas = ["", "15", "10", "5"]  # Cria a lista de tentativas por dificuldade(index)
+    limpar_tela()
+    print("Escolha a dificuldade:")
+    print("1 - Fácil")
+    print("2 - Intermediário")
+    print("3 - Difícil")
+    while True:
+        escolha = input("Digite o número da dificuldade desejada (1, 2 ou 3): ")
+        if escolha in ["1", "2", "3"]:
+            return int(tentativas[int(escolha)])
+        else:
+            limpar_tela()
+            print("Opção inválida. Escolha uma dificuldade válida.")
+
+
+def jogar():
+    apresentacao()
+    jogo_implementacao()
 
 
 if __name__ == "__main__":  # Faz com que o arquivo possa ser executado sem a necessidade de outro.
