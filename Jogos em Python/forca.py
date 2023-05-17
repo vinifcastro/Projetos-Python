@@ -9,8 +9,8 @@ def jogo_da_forca():
     #variáveis utilizadas no jogo.
     palavra_escondida = ["_" for _ in range(len(palavra_secreta))]  # Cria a lista inicial da palavra escondida
     erros = 0  # Quantidade de erros cometidos pelo jogador.
-    forca = ["", "", "", " ", "", "", ""]  # Lista que contém a forca no estado atual.
-    partes_forca = ["", "o", "|", "/", "\\", "/", "\\"]  # Lista que atualizará o estado de forca.
+    forca = ["", "", "", " ", "", "", "", ""]  # Lista que contém a forca no estado atual.
+    partes_forca = ["", "(_)", "|", "\\", "/", "|", "/", "\\"]  # Lista que atualizará o estado de forca.
     enforcou = False  # Define se o usuário perdeu.
     acertou = False  # Define se o usuário ganhou.
 
@@ -24,8 +24,8 @@ def jogo_da_forca():
         if not validar_chute(chute):  # Realiza a validação do chute.
             continue  # Retorna ao início do loop se o chute não for válido.
 
-        if chute in letras_jogadas: # checa se o usuário ja jogou uma certa letra
-            print("Você está jogando uma letra repetida! Tente outra!")
+        if chute in letras_jogadas:
+            print("Essa letra ja foi anteriormente jogada, tente outra!")
             time.sleep(2)
             continue
         letras_jogadas.append(chute)
@@ -45,7 +45,7 @@ def jogo_da_forca():
         else:  # Evidencia ao usuário que ele acertou uma letra.
             print("\n======= Acertou a letra! =======")
 
-        enforcou = erros == 6  # Define a derrota no jogo.
+        enforcou = erros == 7  # Define a derrota no jogo.
 
         acertou = "_" not in palavra_escondida
 
@@ -93,9 +93,12 @@ def imprimir_forca(palavra_escondida, forca, letras_jogadas):
     # Função para imprimir a forca e a palavra escondida na tela
     print(' '.join(palavra_escondida), end="\n\n")
     print("Forca:")
-    print("         ", f"  {forca[1]}  ")
-    print("         ", forca[3], forca[2], forca[4])
-    print("         ", forca[5], " ", forca[6])
+    print("  _______     ")
+    print(" |/      |    ")
+    print(" |   ", f"  {forca[1]}  ")
+    print(" |    ", forca[3], forca[2], forca[4])
+    print(" |      ", forca[5])
+    print(" |     ", forca[6], forca[7])
     print(' '.join(letras_jogadas), end="\n\n")
 
 
